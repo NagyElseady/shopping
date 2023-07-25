@@ -39,7 +39,10 @@ class _ProductWidgetState extends State<ProductWidget> {
               children: [
                 Flexible(
                   flex: 5,
-                  child: TitlesTextWidget(label: "Title " * 10),
+                  child: TitlesTextWidget(
+                    label: "Title " * 10,
+                    maxLines: 2,
+                  ),
                 ),
                 Flexible(
                   child: IconButton(

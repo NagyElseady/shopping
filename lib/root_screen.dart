@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:e_commerce/screen/cart/cart_screen.dart';
 import 'package:e_commerce/screen/home_screen.dart';
 import 'package:e_commerce/screen/profile_screen.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
 class RootScreen extends StatefulWidget {
-  RootScreen({Key? key}) : super(key: key);
+  const RootScreen({super.key});
 
   @override
   State<RootScreen> createState() => _RootScreenState();
@@ -15,7 +14,7 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   late PageController controller;
-  int currentScreen = 3;
+  int currentScreen = 0;
   List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
@@ -35,8 +34,8 @@ class _RootScreenState extends State<RootScreen> {
     return Scaffold(
       body: PageView(
         controller: controller,
-        children: screens,
         physics: const NeverScrollableScrollPhysics(),
+        children: screens,
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentScreen,
@@ -62,14 +61,16 @@ class _RootScreenState extends State<RootScreen> {
           ),
           NavigationDestination(
             selectedIcon: Icon(IconlyBold.bag2),
-            icon:
-                Badge(badgeContent: (Text("6")), child: Icon(IconlyLight.bag2)),
+            icon: Badge(
+                backgroundColor: Colors.blue,
+                label: Text("6"),
+                child: Icon(IconlyLight.bag2)),
             label: "Cart",
           ),
           NavigationDestination(
             selectedIcon: Icon(IconlyBold.profile),
             icon: Icon(IconlyLight.profile),
-            label: "profile",
+            label: "Profile",
           ),
         ],
       ),

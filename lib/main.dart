@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       ) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Shop Smart AR',
+          title: 'Shop Smart ',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
           home: const RootScreen(),

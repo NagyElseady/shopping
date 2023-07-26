@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 
 import '../../consts/app_constants.dart';
+import '../../screen/inner_screens/product_details.dart';
 import '../subtitle_text.dart';
 import '../title_text.dart';
+import 'heart_btn.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({super.key});
@@ -22,8 +21,8 @@ class _ProductWidgetState extends State<ProductWidget> {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
-        onTap: () {
-          log("TODO navigate to the product details screen");
+        onTap: () async {
+          await Navigator.pushNamed(context, ProductDetails.routName);
         },
         child: Column(
           children: [
@@ -35,6 +34,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                 height: size.height * 0.22,
               ),
             ),
+            const SizedBox(
+              height: 15.0,
+            ),
             Row(
               children: [
                 Flexible(
@@ -42,42 +44,50 @@ class _ProductWidgetState extends State<ProductWidget> {
                   child: TitlesTextWidget(
                     label: "Title " * 10,
                     maxLines: 2,
+                    fontSize: 18,
                   ),
                 ),
-                Flexible(
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(IconlyLight.heart),
-                  ),
+                const Flexible(
+                  flex: 2,
+                  child: HeartButtonWidget(),
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Flexible(
-                  flex: 3,
-                  child: SubtitleTextWidget(label: "166.5\$"),
-                ),
-                Flexible(
-                  child: Material(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: Colors.lightBlue,
-                    child: InkWell(
-                      splashColor: Colors.red,
+            const SizedBox(
+              height: 15.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Flexible(
+                    flex: 3,
+                    child: SubtitleTextWidget(label: "166.5\$"),
+                  ),
+                  Flexible(
+                    child: Material(
                       borderRadius: BorderRadius.circular(16.0),
-                      onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.add_shopping_cart_rounded,
-                          size: 18,
+                      color: Colors.lightBlue,
+                      child: InkWell(
+                        splashColor: Colors.red,
+                        borderRadius: BorderRadius.circular(16.0),
+                        onTap: () {},
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.add_shopping_cart_rounded,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  // SizedBox(
+                  //   width: 1,
+                  // ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 10,

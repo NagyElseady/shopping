@@ -1,13 +1,14 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/assets_manager.dart';
 import '../../widgets/empty_bag.dart';
+import '../../widgets/products/product_widget.dart';
 import '../../widgets/title_text.dart';
-import 'bottom_checkout.dart';
-import 'cart_widget.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+class WishlistScreen extends StatelessWidget {
+  static const routName = '/WishlistScreen';
+  const WishlistScreen({super.key});
   final bool isEmpty = false;
   @override
   Widget build(BuildContext context) {
@@ -15,16 +16,15 @@ class CartScreen extends StatelessWidget {
         ? Scaffold(
             body: EmptyBagWidget(
               imagePath: AssetsManager.shoppingBasket,
-              title: "Your cart is empty",
+              title: "Your wishlist is empty",
               subtitle:
                   'Looks like you didn\'t add anything yet to your cart \ngo ahead and start shopping now',
               buttonText: "Shop Now",
             ),
           )
         : Scaffold(
-            bottomSheet: const CartBottomCheckout(),
             appBar: AppBar(
-              title: const TitlesTextWidget(label: "Cart (5)"),
+              title: const TitlesTextWidget(label: "Wishlist (5)"),
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(AssetsManager.shoppingCart),
@@ -39,11 +39,12 @@ class CartScreen extends StatelessWidget {
                 ),
               ],
             ),
-            body: ListView.builder(
-              itemCount: 15,
-              itemBuilder: (context, index) {
-                return const CartWidget();
-              },
+            body: DynamicHeightGridView(
+              itemCount: 220,
+              builder: ((context, index) {
+                return const ProductWidget();
+              }),
+              crossAxisCount: 2,
             ),
           );
   }

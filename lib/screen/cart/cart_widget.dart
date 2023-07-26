@@ -1,9 +1,10 @@
-import 'package:e_commerce/consts/app_constants.dart';
 import 'package:e_commerce/screen/cart/quantity_btm_sheet.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../../consts/app_constants.dart';
+import '../../widgets/products/heart_btn.dart';
 import '../../widgets/subtitle_text.dart';
 import '../../widgets/title_text.dart';
 
@@ -51,13 +52,7 @@ class CartWidget extends StatelessWidget {
                                 color: Colors.red,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                IconlyLight.heart,
-                                color: Colors.red,
-                              ),
-                            ),
+                            const HeartButtonWidget()
                           ],
                         ),
                       ],
@@ -70,11 +65,12 @@ class CartWidget extends StatelessWidget {
                           fontSize: 20,
                           color: Colors.blue,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         OutlinedButton.icon(
                           style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                             side: const BorderSide(
                               width: 2,
                               color: Colors.blue,
@@ -82,18 +78,19 @@ class CartWidget extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await showModalBottomSheet(
-                                backgroundColor:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(16.0),
-                                    topRight: Radius.circular(16.0),
-                                  ),
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(16.0),
+                                  topRight: Radius.circular(16.0),
                                 ),
-                                context: context,
-                                builder: (context) {
-                                  return const QuantityBottomSheetWidget();
-                                });
+                              ),
+                              context: context,
+                              builder: (context) {
+                                return const QuantityBottomSheetWidget();
+                              },
+                            );
                           },
                           icon: const Icon(IconlyLight.arrowDown2),
                           label: const Text("Qty: 6 "),

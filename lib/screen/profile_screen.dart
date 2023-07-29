@@ -1,3 +1,5 @@
+import 'package:e_commerce/screen/inner_screens/viewed_recently.dart';
+import 'package:e_commerce/screen/inner_screens/wishlist.dart';
 import 'package:e_commerce/widgets/app_name_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -5,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
 import '../services/assets_manager.dart';
+import '../services/my_app_method.dart';
 import '../widgets/subtitle_text.dart';
 import '../widgets/title_text.dart';
 
@@ -63,9 +66,9 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       width: 7,
                     ),
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         TitlesTextWidget(label: "Nagy Elsaiedi"),
                         SubtitleTextWidget(label: "nagyelseady@gmail.com"),
                       ],
@@ -90,12 +93,18 @@ class ProfileScreen extends StatelessWidget {
                     CustomListTile(
                       imagePath: AssetsManager.wishlistSvg,
                       text: "Wishlist",
-                      function: () {},
+                      function: () async {
+                        await Navigator.pushNamed(
+                            context, WishlistScreen.routName);
+                      },
                     ),
                     CustomListTile(
                       imagePath: AssetsManager.recent,
                       text: "Viewed recently",
-                      function: () {},
+                      function: () async {
+                        await Navigator.pushNamed(
+                            context, ViewedRecentlyScreen.routName);
+                      },
                     ),
                     CustomListTile(
                       imagePath: AssetsManager.address,
@@ -141,11 +150,17 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
                   icon: const Icon(Icons.login),
                   label: const Text(
                     "Login",
                   ),
+                  onPressed: () async {
+                    MyAppMethods.showErrorORWarningDialog(
+                        context: context,
+                        subtitle: "Are you sure?",
+                        fct: () {},
+                        isError: false);
+                  },
                 ),
               ),
             ],

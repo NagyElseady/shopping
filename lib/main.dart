@@ -1,6 +1,8 @@
 import 'package:e_commerce/providers/theme_provider.dart';
+import 'package:e_commerce/screen/auth/forgot_password.dart';
 import 'package:e_commerce/screen/auth/login.dart';
 import 'package:e_commerce/screen/auth/register.dart';
+import 'package:e_commerce/screen/inner_screens/orders/orders_screen.dart';
 import 'package:e_commerce/screen/inner_screens/product_details.dart';
 import 'package:e_commerce/screen/inner_screens/viewed_recently.dart';
 import 'package:e_commerce/screen/inner_screens/wishlist.dart';
@@ -43,6 +45,10 @@ class MyApp extends StatelessWidget {
             ViewedRecentlyScreen.routName: (context) =>
                 const ViewedRecentlyScreen(),
             RegisterScreen.routName: (context) => const RegisterScreen(),
+            LoginScreen.routName: (context) => const LoginScreen(),
+            OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
+            ForgotPasswordScreen.routeName: (context) =>
+                const ForgotPasswordScreen(),
           },
         );
       }),

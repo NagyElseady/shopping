@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
 import '../services/assets_manager.dart';
-import '../services/my_app_method.dart';
 import '../widgets/subtitle_text.dart';
 import '../widgets/title_text.dart';
+import 'auth/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -155,11 +155,12 @@ class ProfileScreen extends StatelessWidget {
                     "Login",
                   ),
                   onPressed: () async {
-                    MyAppMethods.showErrorORWarningDialog(
-                        context: context,
-                        subtitle: "Are you sure?",
-                        fct: () {},
-                        isError: false);
+                    await Navigator.pushNamed(context, LoginScreen.routName);
+                    // MyAppMethods.showErrorORWarningDialog(
+                    //context: context,
+                    //  subtitle: "Are you sure?",
+                    //  fct: () {},
+                    //  isError: false);
                   },
                 ),
               ),

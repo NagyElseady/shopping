@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../widgets/subtitle_text.dart';
 import '../widgets/title_text.dart';
-import 'assets_manager.dart';
 
 class MyAppMethods {
   static Future<void> showErrorORWarningDialog({
@@ -22,7 +21,7 @@ class MyAppMethods {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  AssetsManager.warning,
+                  'assets/images/profile/warning.png',
                   height: 60,
                   width: 60,
                 ),

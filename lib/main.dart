@@ -1,5 +1,6 @@
 import 'package:e_commerce/providers/product_provider.dart';
 import 'package:e_commerce/providers/theme_provider.dart';
+import 'package:e_commerce/root_screen.dart';
 import 'package:e_commerce/screen/auth/forgot_password.dart';
 import 'package:e_commerce/screen/auth/login.dart';
 import 'package:e_commerce/screen/auth/register.dart';
@@ -7,6 +8,7 @@ import 'package:e_commerce/screen/inner_screens/orders/orders_screen.dart';
 import 'package:e_commerce/screen/inner_screens/product_details.dart';
 import 'package:e_commerce/screen/inner_screens/viewed_recently.dart';
 import 'package:e_commerce/screen/inner_screens/wishlist.dart';
+import 'package:e_commerce/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
           title: 'Shop Smart ',
           theme: Styles.themeData(
               isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-          home: const LoginScreen(),
+          home: const RootScreen(),
           routes: {
             ProductDetails.routName: (context) => const ProductDetails(),
             WishlistScreen.routName: (context) => const WishlistScreen(),
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
             OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
             ForgotPasswordScreen.routeName: (context) =>
                 const ForgotPasswordScreen(),
+            SearchScreen.routeName: (context) => const SearchScreen(),
           },
         );
       }),

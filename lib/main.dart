@@ -1,3 +1,4 @@
+import 'package:e_commerce/providers/product_provider.dart';
 import 'package:e_commerce/providers/theme_provider.dart';
 import 'package:e_commerce/screen/auth/forgot_password.dart';
 import 'package:e_commerce/screen/auth/login.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductProvider(),
         ),
       ],
       child: Consumer<ThemeProvider>(builder: (

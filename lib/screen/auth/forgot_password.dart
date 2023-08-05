@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+
 import '../../consts/my_validators.dart';
 import '../../services/assets_manager.dart';
 import '../../widgets/app_name_text.dart';
@@ -54,7 +55,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         },
         child: SafeArea(
           child: ListView(
-            // shrinkWrap: true,
             padding: const EdgeInsets.symmetric(horizontal: 24),
             physics: const BouncingScrollPhysics(),
             children: [

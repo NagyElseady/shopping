@@ -10,6 +10,7 @@ import '../services/assets_manager.dart';
 import '../widgets/subtitle_text.dart';
 import '../widgets/title_text.dart';
 import 'auth/login.dart';
+import 'inner_screens/orders/orders_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -88,7 +89,12 @@ class ProfileScreen extends StatelessWidget {
                     CustomListTile(
                       imagePath: AssetsManager.orderSvg,
                       text: "All orders",
-                      function: () {},
+                      function: () async {
+                        await Navigator.pushNamed(
+                          context,
+                          OrdersScreenFree.routeName,
+                        );
+                      },
                     ),
                     CustomListTile(
                       imagePath: AssetsManager.wishlistSvg,

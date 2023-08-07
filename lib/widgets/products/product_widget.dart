@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/cart_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../screen/inner_screens/product_details.dart';
 import '../subtitle_text.dart';
@@ -13,8 +14,8 @@ class ProductWidget extends StatefulWidget {
     super.key,
     required this.productId,
   });
-  final String productId;
 
+  final String productId;
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
@@ -22,9 +23,11 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
-    //final productModelProvider = Provider.of<ProductModel>(context);
+    // final productModelProvider = Provider.of<ProductModel>(context);
     final productProvider = Provider.of<ProductProvider>(context);
     final getCurrProduct = productProvider.findByProId(widget.productId);
+    final cartProvider = Provider.of<CartProvider>(context);
+
     Size size = MediaQuery.of(context).size;
     return getCurrProduct == null
         ? const SizedBox.shrink()
@@ -78,7 +81,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                         Flexible(
                           flex: 3,
                           child: SubtitleTextWidget(
-                              label: "${getCurrProduct.productPrice}\$"),
+                            label: "${getCurrProduct.productPrice}\$",
+                          ),
                         ),
                         Flexible(
                           child: Material(
@@ -87,12 +91,23 @@ class _ProductWidgetState extends State<ProductWidget> {
                             child: InkWell(
                               splashColor: Colors.red,
                               borderRadius: BorderRadius.circular(16.0),
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              onTap: () {
+                                if (cartProvider.isProductInCart(
+                                    productId: getCurrProduct.productId)) {
+                                  return;
+                                }
+                                cartProvider.addProductToCart(
+                                    productId: getCurrProduct.productId);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
-                                  Icons.add_shopping_cart_rounded,
+                                  cartProvider.isProductInCart(
+                                          productId: getCurrProduct.productId)
+                                      ? Icons.check
+                                      : Icons.add_shopping_cart_rounded,
                                   size: 20,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

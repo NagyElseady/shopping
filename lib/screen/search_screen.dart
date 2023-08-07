@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
-import 'package:e_commerce/models/product_model.dart';
-import 'package:e_commerce/providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/product_model.dart';
+import '../providers/product_provider.dart';
 import '../services/assets_manager.dart';
 import '../widgets/products/product_widget.dart';
 import '../widgets/title_text.dart';
@@ -33,11 +31,14 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
+  List<ProductModel> productListSearch = [];
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
+
     String? passedCategory =
         ModalRoute.of(context)!.settings.arguments as String?;
+
     final List<ProductModel> productList = passedCategory == null
         ? productProvider.getProducts
         : productProvider.findByCategory(ctgName: passedCategory);
@@ -55,9 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           body: productList.isEmpty
               ? const Center(
-                  child: TitlesTextWidget(
-                    label: "No Product found",
-                  ),
+                  child: TitlesTextWidget(label: "No product found"),
                 )
               : Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -69,6 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       TextField(
                         controller: searchTextController,
                         decoration: InputDecoration(
+                          hintText: "Search",
                           filled: true,
                           prefixIcon: const Icon(Icons.search),
                           suffixIcon: GestureDetector(
@@ -84,23 +84,41 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                         ),
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          // setState(() {
+                          //   productListSearch = productProvider.searchQuery(
+                          //       searchText: searchTextController.text);
+                          // });
+                        },
                         onSubmitted: (value) {
-                          log(searchTextController.text);
+                          setState(() {
+                            productListSearch = productProvider.searchQuery(
+                                searchText: searchTextController.text,
+                                passedList: productList);
+                          });
                         },
                       ),
                       const SizedBox(
                         height: 15.0,
                       ),
+                      if (searchTextController.text.isNotEmpty &&
+                          productListSearch.isEmpty) ...[
+                        const Center(
+                            child: TitlesTextWidget(
+                          label: "No results found",
+                          fontSize: 40,
+                        ))
+                      ],
                       Expanded(
                         child: DynamicHeightGridView(
-                          itemCount: productList.length,
+                          itemCount: searchTextController.text.isNotEmpty
+                              ? productListSearch.length
+                              : productList.length,
                           builder: ((context, index) {
-                            return ChangeNotifierProvider.value(
-                              value: productList[index],
-                              child: ProductWidget(
-                                productId: productList[index].productId,
-                              ),
+                            return ProductWidget(
+                              productId: searchTextController.text.isNotEmpty
+                                  ? productListSearch[index].productId
+                                  : productList[index].productId,
                             );
                           }),
                           crossAxisCount: 2,

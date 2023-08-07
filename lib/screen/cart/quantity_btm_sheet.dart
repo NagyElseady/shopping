@@ -1,13 +1,16 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/cart_model.dart';
+import '../../providers/cart_provider.dart';
 import '../../widgets/subtitle_text.dart';
 
 class QuantityBottomSheetWidget extends StatelessWidget {
-  const QuantityBottomSheetWidget({super.key});
-
+  const QuantityBottomSheetWidget({super.key, required this.cartModel});
+  final CartModel cartModel;
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -34,7 +37,11 @@ class QuantityBottomSheetWidget extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      log("index  $index");
+                      cartProvider.updateQuantity(
+                        productId: cartModel.productId,
+                        quantity: index + 1,
+                      );
+                      Navigator.pop(context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),

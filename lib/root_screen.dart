@@ -19,7 +19,7 @@ class _RootScreenState extends State<RootScreen> {
   int currentScreen = 0;
   List<Widget> screens = [
     const HomeScreen(),
-    SearchScreen(),
+    const SearchScreen(),
     const CartScreen(),
     const ProfileScreen()
   ];

@@ -1,7 +1,9 @@
+import 'package:e_commerce/providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/cart_model.dart';
+import '../models/product_model.dart';
 
 class CartProvider with ChangeNotifier {
   final Map<String, CartModel> _cartItems = {};
@@ -35,6 +37,38 @@ class CartProvider with ChangeNotifier {
         quantity: quantity,
       ),
     );
+    notifyListeners();
+  }
+
+  double getTotal({required ProductProvider productProvider}) {
+    double total = 0.0;
+    _cartItems.forEach((key, value) {
+      final ProductModel? getCurrProduct =
+          productProvider.findByProdId(value.productId);
+      if (getCurrProduct == null) {
+        total += 0;
+      } else {
+        total += double.parse(getCurrProduct.productPrice) * value.quantity;
+      }
+    });
+    return total;
+  }
+
+  int getQty() {
+    int total = 0;
+    _cartItems.forEach((key, value) {
+      total += value.quantity;
+    });
+    return total;
+  }
+
+  void removeOneItem({required String productId}) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearLocalCart() {
+    _cartItems.clear();
     notifyListeners();
   }
 }

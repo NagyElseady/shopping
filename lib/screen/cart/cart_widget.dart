@@ -5,6 +5,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/cart_model.dart';
+import '../../providers/cart_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../widgets/products/heart_btn.dart';
 import '../../widgets/subtitle_text.dart';
@@ -18,8 +19,9 @@ class CartWidget extends StatelessWidget {
     final cartModelProvider = Provider.of<CartModel>(context);
     final productProvider = Provider.of<ProductProvider>(context);
     final getCurrProduct =
-        productProvider.findByProId(cartModelProvider.productId);
+        productProvider.findByProdId(cartModelProvider.productId);
     Size size = MediaQuery.of(context).size;
+    final cartProvider = Provider.of<CartProvider>(context);
     return getCurrProduct == null
         ? const SizedBox.shrink()
         : FittedBox(
@@ -54,7 +56,11 @@ class CartWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      cartProvider.removeOneItem(
+                                        productId: getCurrProduct.productId,
+                                      );
+                                    },
                                     icon: const Icon(
                                       Icons.clear,
                                       color: Colors.red,
@@ -66,6 +72,7 @@ class CartWidget extends StatelessWidget {
                             ],
                           ),
                           Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SubtitleTextWidget(
                                 label: "${getCurrProduct.productPrice}\$",

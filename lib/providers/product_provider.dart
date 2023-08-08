@@ -8,13 +8,11 @@ class ProductProvider with ChangeNotifier {
     return _products;
   }
 
-  ProductModel? findByProId(String productId) {
+  ProductModel? findByProdId(String productId) {
     if (_products.where((element) => element.productId == productId).isEmpty) {
       return null;
     }
-    {
-      return _products.firstWhere((element) => element.productId == productId);
-    }
+    return _products.firstWhere((element) => element.productId == productId);
   }
 
   List<ProductModel> findByCategory({required String ctgName}) {

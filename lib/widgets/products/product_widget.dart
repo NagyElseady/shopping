@@ -23,6 +23,7 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
+    // final productModelProvider = Provider.of<ProductModel>(context);
     final productProvider = Provider.of<ProductProvider>(context);
     final getCurrProduct = productProvider.findByProdId(widget.productId);
     final cartProvider = Provider.of<CartProvider>(context);
@@ -63,9 +64,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                           fontSize: 18,
                         ),
                       ),
-                      const Flexible(
+                      Flexible(
                         flex: 2,
-                        child: HeartButtonWidget(),
+                        child: HeartButtonWidget(
+                            productId: getCurrProduct.productId),
                       ),
                     ],
                   ),

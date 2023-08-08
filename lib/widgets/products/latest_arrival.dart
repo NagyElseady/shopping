@@ -50,7 +50,7 @@ class LatestArrivalProductsWidget extends StatelessWidget {
                     FittedBox(
                       child: Row(
                         children: [
-                          const HeartButtonWidget(),
+                          HeartButtonWidget(productId: productsModel.productId),
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(

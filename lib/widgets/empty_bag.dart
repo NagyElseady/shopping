@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'subtitle_text.dart';
 import 'title_text.dart';
 
 class EmptyBagWidget extends StatelessWidget {
-  const EmptyBagWidget(
-      {super.key,
-      required this.imagePath,
-      required this.title,
-      required this.subtitle,
-      required this.buttonText});
+  const EmptyBagWidget({
+    Key? key,
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
+    required this.buttonText,
+  }) : super(key: key);
+
   final String imagePath, title, subtitle, buttonText;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

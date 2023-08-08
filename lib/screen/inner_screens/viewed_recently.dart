@@ -1,7 +1,10 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/viewed_prod_provider.dart';
 import '../../services/assets_manager.dart';
+import '../../services/my_app_method.dart';
 import '../../widgets/empty_bag.dart';
 import '../../widgets/products/product_widget.dart';
 import '../../widgets/title_text.dart';
@@ -9,10 +12,11 @@ import '../../widgets/title_text.dart';
 class ViewedRecentlyScreen extends StatelessWidget {
   static const routName = '/ViewedRecentlyScreen';
   const ViewedRecentlyScreen({super.key});
-  final bool isEmpty = false;
+
   @override
   Widget build(BuildContext context) {
-    return isEmpty
+    final viewedProvider = Provider.of<ViewedProdProvider>(context);
+    return viewedProvider.getViewedProdItems.isEmpty
         ? Scaffold(
             body: EmptyBagWidget(
               imagePath: AssetsManager.shoppingBasket,
@@ -24,14 +28,24 @@ class ViewedRecentlyScreen extends StatelessWidget {
           )
         : Scaffold(
             appBar: AppBar(
-              title: const TitlesTextWidget(label: "Viewed recently (5)"),
+              title: TitlesTextWidget(
+                  label:
+                      "Viewed recently (${viewedProvider.getViewedProdItems.length})"),
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(AssetsManager.shoppingCart),
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    MyAppMethods.showErrorORWarningDialog(
+                        isError: false,
+                        context: context,
+                        subtitle: "Remove items",
+                        fct: () {
+                          viewedProvider.clearLocalViewedProd();
+                        });
+                  },
                   icon: const Icon(
                     Icons.delete_forever_rounded,
                     color: Colors.red,
@@ -40,10 +54,15 @@ class ViewedRecentlyScreen extends StatelessWidget {
               ],
             ),
             body: DynamicHeightGridView(
-              itemCount: 220,
+              itemCount: viewedProvider.getViewedProdItems.length,
               builder: ((context, index) {
-                return const ProductWidget(
-                  productId: "",
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ProductWidget(
+                    productId: viewedProvider.getViewedProdItems.values
+                        .toList()[index]
+                        .productId,
+                  ),
                 );
               }),
               crossAxisCount: 2,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/product_model.dart';
+import '../../providers/viewed_prod_provider.dart';
 import '../../screen/inner_screens/product_details.dart';
 import '../subtitle_text.dart';
 import 'heart_btn.dart';
@@ -14,11 +15,18 @@ class LatestArrivalProductsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final productsModel = Provider.of<ProductModel>(context);
+    final viewedProvider = Provider.of<ViewedProdProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () async {
-          await Navigator.pushNamed(context, ProductDetails.routName);
+          viewedProvider.addProductToHistory(
+              productId: productsModel.productId);
+          await Navigator.pushNamed(
+            context,
+            ProductDetails.routName,
+            arguments: productsModel.productId,
+          );
         },
         child: SizedBox(
           width: size.width * 0.45,

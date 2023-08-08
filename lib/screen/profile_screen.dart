@@ -161,12 +161,10 @@ class ProfileScreen extends StatelessWidget {
                     "Login",
                   ),
                   onPressed: () async {
-                    await Navigator.pushNamed(context, LoginScreen.routName);
-                    // MyAppMethods.showErrorORWarningDialog(
-                    //context: context,
-                    //  subtitle: "Are you sure?",
-                    //  fct: () {},
-                    //  isError: false);
+                    await Navigator.pushNamed(
+                      context,
+                      LoginScreen.routName,
+                    );
                   },
                 ),
               ),

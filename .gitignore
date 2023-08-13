@@ -42,3 +42,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+firebase_options.dart
+google-services.json
+firebase_app_id_file.json
+flutter_export_environment.sh
+Generated.xcconfig
+e_commerce_android.iml
+file-system.probe
+GoogleService-Info.plist
+GeneratedPluginRegistrant
+

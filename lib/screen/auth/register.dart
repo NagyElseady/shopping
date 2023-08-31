@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
   XFile? _pickedImage;
   final auth = FirebaseAuth.instance;
+  String? userImageUrl;
   @override
   void initState() {
     _nameController = TextEditingController();
@@ -67,13 +71,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _registerFct() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-
+    if (_pickedImage == null) {
+      MyAppMethods.showErrorORWarningDialog(
+        context: context,
+        subtitle: "Make sure to pick up an image",
+        fct: () {},
+      );
+      return;
+    }
     if (isValid) {
       _formKey.currentState!.save();
       try {
         setState(() {
           _isLoading = true;
         });
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("usersImages")
+            .child('${_emailController.text.trim()}.jpg');
+        await ref.putFile(File(_pickedImage!.path));
+        userImageUrl = await ref.getDownloadURL();
+
         await auth.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
@@ -83,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await FirebaseFirestore.instance.collection("users").doc(uid).set({
           'userId': uid,
           'userName': _nameController.text,
-          'userImage': "",
+          'userImage': userImageUrl,
           'userEmail': _emailController.text.toLowerCase(),
           'createdAt': Timestamp.now(),
           'userWish': [],
@@ -99,13 +117,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } on FirebaseAuthException catch (error) {
         await MyAppMethods.showErrorORWarningDialog(
           context: context,
-          subtitle: "An error has been occurred ${error.message}",
+          subtitle: "An error has been occured ${error.message}",
           fct: () {},
         );
       } catch (error) {
         await MyAppMethods.showErrorORWarningDialog(
           context: context,
-          subtitle: "An error has been occurred $error",
+          subtitle: "An error has been occured $error",
           fct: () {},
         );
       } finally {
